@@ -57,7 +57,7 @@ namespace JustFixIt.ViewModel
             }
         }
 
-        #region MyRegion
+        #region PropertyChangeSupport
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
