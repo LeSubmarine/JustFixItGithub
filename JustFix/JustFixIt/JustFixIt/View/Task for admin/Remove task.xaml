@@ -17,10 +17,10 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <ListView ItemsSource="{Binding WeekDay, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-        <ComboBox
-            Grid.Column="1"
-            ItemsSource="{Binding ListOfDays}"
-            SelectedIndex="{Binding SelectedDay, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+        <ListView ItemsSource="{Binding WeekDay, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding SelectedOrder, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+        <StackPanel Grid.Column="1">
+            <ComboBox ItemsSource="{Binding ListOfDays}" SelectedIndex="{Binding SelectedDay, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+            <Button Command="{Binding RemoveCommand}" Content="Remove" />
+        </StackPanel>
     </Grid>
 </Page>

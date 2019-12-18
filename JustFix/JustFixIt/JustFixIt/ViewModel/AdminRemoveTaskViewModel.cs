@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using JustFixIt.Annotations;
 using JustFixIt.Model;
 
@@ -23,6 +24,7 @@ namespace JustFixIt.ViewModel
         {
             ListOfDays = new ObservableCollection<string>(Day.ListOfDays);
             WeekDay = new ObservableCollection<Order>(Week.WeekTable.Days[0].Orders);
+            RemoveCommand = new RelayCommand(Remove);
         }
         #endregion
 
@@ -43,6 +45,21 @@ namespace JustFixIt.ViewModel
             }
         }
 
+        public int SelectedOrder { get; set; }
+        public ICommand RemoveCommand { get; set; }
+        #endregion
+
+
+        #region Methods
+        public void Remove()
+        {
+            if (SelectedOrder >= 0 && SelectedOrder < Week.WeekTable.Days[SelectedDay].Orders.Count)
+            {
+                Week.WeekTable.Days[SelectedDay].Orders.RemoveAt(SelectedOrder);
+                WeekDay.RemoveAt(SelectedOrder);
+                MainViewModel.SaveWeek();
+            }
+        }
         #endregion
 
 
