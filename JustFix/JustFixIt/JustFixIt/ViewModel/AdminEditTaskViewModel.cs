@@ -15,6 +15,7 @@ namespace JustFixIt.ViewModel
     class AdminEditTaskViewModel : INotifyPropertyChanged
     {
         #region Instancefield
+
         private int _selectedDay;
         private ObservableCollection<Order> _weekDay;
         private ObservableCollection<WorkTask> _theOrder;
@@ -25,6 +26,7 @@ namespace JustFixIt.ViewModel
 
 
         #region Constructor
+
         public AdminEditTaskViewModel()
         {
             ListOfDays = new ObservableCollection<string>(Day.ListOfDays);
@@ -34,10 +36,13 @@ namespace JustFixIt.ViewModel
             AddCommand = new RelayCommand(Add);
             SaveCommand = new RelayCommand(Save);
         }
+
         #endregion
 
 
         #region Properties
+
+        public int SelectedWorkTaskFromOrder { get; set; }
         public ICommand RemoveCommand { get; set; }
         public ICommand AddCommand { get; set; }
         public ICommand SaveCommand { get; set; }
@@ -52,7 +57,11 @@ namespace JustFixIt.ViewModel
         public ObservableCollection<WorkTask> TheOrder
         {
             get => _theOrder;
-            set { _theOrder = value; OnPropertyChanged();}
+            set
+            {
+                _theOrder = value;
+                OnPropertyChanged();
+            }
         }
 
         public ObservableCollection<string> ListOfDays { get; set; }
@@ -60,7 +69,11 @@ namespace JustFixIt.ViewModel
         public ObservableCollection<Order> WeekDay
         {
             get => _weekDay;
-            set { _weekDay = value; OnPropertyChanged();}
+            set
+            {
+                _weekDay = value;
+                OnPropertyChanged();
+            }
         }
 
         public int SelectedDay
@@ -76,10 +89,18 @@ namespace JustFixIt.ViewModel
         public int SelectedOrder
         {
             get => _selectedOrder;
-            set { _selectedOrder = value; TheOrder = new ObservableCollection<WorkTask>(Week.WeekTable.Days[SelectedDay].Orders[SelectedOrder].WorkTasks); }
+            set
+            {
+                _selectedOrder = value;
+                if (SelectedOrder >= 0)
+                {
+                    TheOrder = new ObservableCollection<WorkTask>(Week.WeekTable.Days[SelectedDay].Orders[SelectedOrder].WorkTasks);
+                }
+            }
         }
+    
 
-        #endregion
+    #endregion
 
 
         #region Methods
@@ -91,8 +112,11 @@ namespace JustFixIt.ViewModel
 
         public void Remove()
         {
-            TheOrder.RemoveAt(SelectedOrder);
-            Week.WeekTable.Days[SelectedDay].Orders[SelectedOrder].WorkTasks.RemoveAt(SelectedOrder);
+            if (SelectedWorkTaskFromOrder>= 0 && SelectedWorkTaskFromOrder < TheOrder.Count) 
+            {
+                Week.WeekTable.Days[SelectedDay].Orders[SelectedWorkTaskFromOrder].WorkTasks.RemoveAt(SelectedWorkTaskFromOrder);
+                TheOrder.RemoveAt(SelectedWorkTaskFromOrder);
+            }
         }
 
         public void Save()
