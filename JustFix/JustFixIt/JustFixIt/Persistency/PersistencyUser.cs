@@ -38,29 +38,27 @@ namespace JustFixIt.Persistency
             SerializeNotesFileAsync(mechanicsJsonString, jsonMechanicsFileName);
         }
 
-        public static async Task<List<User>> LoadUsersFromJsonAsync()
-        {
-            //Admin load
-            string adminJsonString = await DeserializeNotesFileAsync(jsonAdminsFileName);
-            //Customer load
-            string customerJsonString = await DeserializeNotesFileAsync(jsonCustomersFileName);
-            //Mechanic load
-            string mechanicJsonString = await DeserializeNotesFileAsync(jsonMechanicsFileName);
-            List<User> LoadedUsers = new List<User>();
-            foreach (AdminUser adminUser in (List<AdminUser>)JsonConvert.DeserializeObject(adminJsonString, typeof(List<AdminUser>)))
-            {
-                LoadedUsers.Add(adminUser);
-            }
-            foreach (CustomerUser customerUser in (List<CustomerUser>)JsonConvert.DeserializeObject(customerJsonString, typeof(List<CustomerUser>)))
-            {
-                LoadedUsers.Add(customerUser);
-            }
-            foreach (MechanicUser mechanicUser in (List<MechanicUser>)JsonConvert.DeserializeObject(mechanicJsonString, typeof(List<MechanicUser>)))
-            {
-                LoadedUsers.Add(mechanicUser);
-            }
 
-            return LoadedUsers;
+        public static async Task<List<AdminUser>> LoadAdminsFromJsonAsync()
+        {
+            string notesJsonString = await DeserializeNotesFileAsync(jsonAdminsFileName);
+            if (notesJsonString != null)
+                return (List<AdminUser>)JsonConvert.DeserializeObject(notesJsonString, typeof(List<AdminUser>));
+            return null;
+        }
+        public static async Task<List<CustomerUser>> LoadCustomersFromJsonAsync()
+        {
+            string notesJsonString = await DeserializeNotesFileAsync(jsonCustomersFileName);
+            if (notesJsonString != null)
+                return (List<CustomerUser>)JsonConvert.DeserializeObject(notesJsonString, typeof(List<CustomerUser>));
+            return null;
+        }
+        public static async Task<List<MechanicUser>> LoadMechanicsFromJsonAsync()
+        {
+            string notesJsonString = await DeserializeNotesFileAsync(jsonMechanicsFileName);
+            if (notesJsonString != null)
+                return (List<MechanicUser>)JsonConvert.DeserializeObject(notesJsonString, typeof(List<MechanicUser>));
+            return null;
         }
 
 

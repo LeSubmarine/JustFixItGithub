@@ -17,10 +17,6 @@ namespace JustFixIt.ViewModel
             WorkTask.WorkTasks = new List<WorkTask>();
             WorkTask.WorkTasks.Add(new WorkTask("Oil change", 2500));
             WorkTask.WorkTasks.Add(new WorkTask("Tire change", 800));
-            //Week.WeekTable = new Week();
-            //MainViewModel.AllUsers.Add(new AdminUser("13", "Admin", "Admin", "sss", "11122233", "Xd@Lmao.dk"));
-            //MainViewModel.AllUsers.Add(new CustomerUser("14", "Customer", "Customer", "ss", "11122234", "Eyyy@yoyo.dk"));
-            //MainViewModel.AllUsers.Add(new MechanicUser("15", "Mechanic", "Mechanic", "sds", "11122235", "gfto@IDontNeedNoDocumentationLmao.Ik'LæsMinKodeYo"));
             LoadUsersAndWeek();
         }
         #endregion
@@ -54,20 +50,52 @@ namespace JustFixIt.ViewModel
         public static async void LoadUser()
         {
 
-            var users = await PersistencyUser.LoadUsersFromJsonAsync();
-            foreach (var user in users)
+            var admins = await PersistencyUser.LoadAdminsFromJsonAsync();
+            if (admins == null)
             {
-                AllUsers.Add(user);
+                admins = new List<AdminUser>(){new AdminUser("12","Admin","Admin","Adminguy","12345679","skraadda@forlora.du")};
+            }
+            foreach (var admin in admins)
+            {
+                AllUsers.Add(admin);
+            }
+
+            var customers = await PersistencyUser.LoadCustomersFromJsonAsync();
+            if (customers == null)
+            {
+                customers = new List<CustomerUser>() {new CustomerUser("13", "Customer", "Customer", "Customerguy", "12345678", "xd@Nahman.lmao")};
+            }
+
+            foreach (var customer in customers)
+            {
+                AllUsers.Add(customer);
+            }
+            var mechanics = await PersistencyUser.LoadMechanicsFromJsonAsync();
+            if (mechanics == null)
+            {
+                mechanics = new List<MechanicUser>() { new MechanicUser("14", "Customer", "Customer", "Customerguy", "12345678", "xd@Nahman.lmao") };
+            }
+
+            foreach (var mechanic in mechanics)
+            {
+                AllUsers.Add(mechanic);
             }
         }
 
         public static async void LoadWeeks()
         {
             var weeks = await PersistencyWeek.LoadWeeksFromJsonAsync();
-
-            foreach (var week in weeks)
+            
+            if (weeks == null)
             {
-                Week.WeekTable = week;
+                Week.WeekTable = new Week();
+            }
+            else
+            {
+                foreach (var week in weeks)
+                {
+                    Week.WeekTable = week;
+                }
             }
         }
         #endregion

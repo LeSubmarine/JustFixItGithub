@@ -14,7 +14,7 @@ namespace JustFixIt.Persistency
 {
     class PersistencyWeek
     {
-        private const string JsonWeekFileName = "Week.json";
+        private const string JsonWeekFileName = "Week3.json";
 
         public static void SaveWeekAsJson(List<Week> weeks)
         {
@@ -25,13 +25,9 @@ namespace JustFixIt.Persistency
         public static async Task<List<Week>> LoadWeeksFromJsonAsync()
         {
             string weekJsonString = await DeserializeNotesFileAsync(JsonWeekFileName);
-            List<Week> LoadedUsers = new List<Week>();
-            foreach (Week week in (List<Week>)JsonConvert.DeserializeObject(weekJsonString, typeof(List<Week>)))
-            {
-                LoadedUsers.Add(week);
-            }
-
-            return LoadedUsers;
+            if (weekJsonString!= null)
+                return (List<Week>)JsonConvert.DeserializeObject(weekJsonString, typeof(List<Week>));
+            return null;
         }
 
         private static async void SerializeNotesFileAsync(string notesJsonString, string fileName)
