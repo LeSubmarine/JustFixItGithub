@@ -1,0 +1,60 @@
+﻿<Page
+    x:Class="JustFixIt.View.Task_for_admin.Add_task"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:JustFixIt.View.Task_for_admin"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModel="using:JustFixIt.ViewModel"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    mc:Ignorable="d">
+
+    <Page.DataContext>
+        <viewModel:AdminViewModel />
+    </Page.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="2*" />
+        </Grid.ColumnDefinitions>
+        <Viewbox>
+            <ListView ItemsSource="{Binding Tasks}" SelectedIndex="{Binding SelectedTask, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        </Viewbox>
+        <Viewbox Grid.Column="2">
+            <ListView ItemsSource="{Binding Order, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" SelectedIndex="{Binding SelectedTaskInOrder, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        </Viewbox>
+        <Viewbox Grid.Row="1" Grid.Column="1">
+            <StackPanel>
+                <Button
+                    x:Name="AddCommandButton"
+                    Width="100"
+                    Margin="0,0,0,10"
+                    Command="{Binding AddCommand}"
+                    Content="Add" />
+                <Button
+                    x:Name="RemoveCommandButton"
+                    Width="100"
+                    Margin="0,0,0,10"
+                    Command="{Binding RemoveCommand, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                    Content="Remove" />
+            </StackPanel>
+        </Viewbox>
+        <Viewbox Grid.Column="3">
+            <StackPanel>
+
+
+                <Button Command="{Binding AddToCalenderCommand}" Content="Add to day" />
+            </StackPanel>
+        </Viewbox>
+        <ComboBox
+            Grid.Column="3"
+            Margin="60"
+            ItemsSource="{Binding ListOfDays}"
+            SelectedIndex="{Binding SelectedDay, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+    </Grid>
+</Page>

@@ -6,18 +6,17 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using JustFixIt.Annotations;
 using JustFixIt.Model;
+using JustFixIt.View;
 
 namespace JustFixIt.ViewModel
 {
     class AdminViewModel : INotifyPropertyChanged
     {
         #region Instance field
-
-        private User _selectedUser;
-        private string _pickedUser;
-
+        private ObservableCollection<WorkTask> _order;
         #endregion
 
 
@@ -25,7 +24,13 @@ namespace JustFixIt.ViewModel
 
         public AdminViewModel()
         {
-            Users = new ObservableCollection<User>(MainViewModel.AllUsers);
+            Actions = new ObservableCollection<string>() {"Edit Tasks","Add Task","Remove Task"};
+            AddToCalenderCommand = new RelayCommand(AddToCalender);
+            ListOfDays = new ObservableCollection<string>(Day.ListOfDays);
+            Tasks = new ObservableCollection<WorkTask>(WorkTask.WorkTasks);
+            AddCommand = new RelayCommand(Add);
+            RemoveCommand = new RelayCommand(Remove);
+            Order = new ObservableCollection<WorkTask>();
         }
 
         #endregion
@@ -33,30 +38,53 @@ namespace JustFixIt.ViewModel
 
         #region Property
 
-        public ObservableCollection<User> Users { get; set; }
-
-        public string PickedUser
+        public int SelectedDay { get; set; }
+        public ObservableCollection<string> Actions { get; set; }
+        public ICommand AddCommand { get; set; }
+        public ICommand RemoveCommand { get; set; }
+        public int SelectedTask { get; set; }
+        public int SelectedTaskInOrder { get; set; }
+        public ObservableCollection<WorkTask> Tasks { get; set; }
+        public ICommand AddToCalenderCommand { get; set; }
+        public ObservableCollection<string> ListOfDays { get; set; }
+        public ObservableCollection<WorkTask> Order
         {
-            get => _pickedUser;
+            get => _order;
             set
             {
-                _pickedUser = value;
-                OnPropertyChanged();
+                _order = value; OnPropertyChanged();
             }
         }
-
-        public User SelectedUser
-        {
-            get => _selectedUser;
-            set
-            {
-                _selectedUser = value;
-                OnPropertyChanged();
-            }
-        }
-
         #endregion
 
+
+        #region Method
+        public void AddToCalender()
+        {
+            if (Week.WeekTable.Days[SelectedDay].TimeAvailable && Order.Count != 0)
+            {
+                List<WorkTask> newOrder = new List<WorkTask>();
+                foreach (WorkTask workTask in Order)
+                {
+                    newOrder.Add(workTask);
+                }
+                Week.WeekTable.Days[SelectedDay].AddTask(newOrder);
+                for (int i = 0; i < Order.Count;)
+                {
+                    Order.RemoveAt(i);
+                }
+            }
+            MainViewModel.SaveWeek();
+        }
+        public void Remove()
+        {
+            Order.RemoveAt(SelectedTaskInOrder);
+        }
+        public void Add()
+        {
+            Order.Add(WorkTask.WorkTasks[SelectedTask]);
+        }
+        #endregion
 
         #region PropertyChangeSupport
 

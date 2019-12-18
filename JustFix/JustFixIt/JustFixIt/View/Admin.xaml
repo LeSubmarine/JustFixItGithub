@@ -14,19 +14,12 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="3*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="4*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Viewbox>
-            <ListView
-                x:Name="UserList"
-                Height="800"
-                ItemsSource="{Binding Users}"
-                SelectedItem="{Binding SelectedUser, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-        </Viewbox>
         <Viewbox Grid.Row="1">
             <Button
                 x:Name="Back"
@@ -35,8 +28,22 @@
                 Click="Back_Click"
                 Content="Log out" />
         </Viewbox>
-        <Viewbox Grid.Column="1">
-            <TextBlock Text="{Binding SelectedUser, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+        <Viewbox>
+            <StackPanel>
+                <Button
+                    x:Name="Edit"
+                    Click="Edit_Click"
+                    Content="Edit task" />
+                <Button
+                    x:Name="Remove"
+                    Click="Remove_Click"
+                    Content="Remove task" />
+                <Button
+                    x:Name="Add"
+                    Click="Add_Click"
+                    Content="Add Task" />
+            </StackPanel>
         </Viewbox>
+        <Frame x:Name="Actions" Grid.Column="1" />
     </Grid>
 </Page>

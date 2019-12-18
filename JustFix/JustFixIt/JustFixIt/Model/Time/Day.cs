@@ -26,7 +26,7 @@ namespace JustFixIt.Model
         {
             Weekday = (Weekdays)weekday;
             TimeAvailable = true;
-            Tasks = new List<List<WorkTask>>();
+            Orders = new List<Order>();
         }
         #endregion
 
@@ -34,7 +34,7 @@ namespace JustFixIt.Model
         #region Properties
 
         public Weekdays Weekday { get; set; }
-        public List<List<WorkTask>> Tasks { get; set; }
+        public List<Order> Orders { get; set; }
         public bool TimeAvailable { get; set; }
         #endregion
 
@@ -46,10 +46,10 @@ namespace JustFixIt.Model
             if (TimeAvailable)
             {
 
-                Tasks.Add(task);
+                Orders.Add(new Order(task));
 
             }
-            if (Tasks.Count >= 4)
+            if (Orders.Count >= 4)
             {
                 TimeAvailable = false;
             }
@@ -57,8 +57,8 @@ namespace JustFixIt.Model
 
         public void RemoveTask(int index)
         {
-            Tasks.RemoveAt(index);
-            if (Tasks.Count < 4)
+            Orders.RemoveAt(index);
+            if (Orders.Count < 4)
             {
                 TimeAvailable = true;
             }
@@ -70,8 +70,9 @@ namespace JustFixIt.Model
             switch (Weekday)
             {
                 case Weekdays.Monday:
-                    returnString = "Monday\n";
-                    break;
+                    return "Monday";
+                    //returnString = "Monday\n";
+                    //break;
                 case Weekdays.Tuesday:
                     return "Tuesday";
                 case Weekdays.Wednesday:

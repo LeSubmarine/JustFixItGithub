@@ -34,7 +34,12 @@ namespace JustFixIt.ViewModel
         {
             if (Week.WeekTable.Days[SelectedDay].TimeAvailable && Order.Count != 0)
             {
-                Week.WeekTable.Days[SelectedDay].AddTask(new List<WorkTask>(Order));
+                List<WorkTask> newOrder = new List<WorkTask>();
+                foreach (WorkTask workTask in Order)
+                {
+                    newOrder.Add(workTask);
+                }
+                Week.WeekTable.Days[SelectedDay].AddTask(newOrder);
                 for (int i = 0; i < Order.Count;)
                 {
                     Order.RemoveAt(i);

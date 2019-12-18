@@ -29,6 +29,7 @@ namespace JustFixIt.ViewModel
         }
         #endregion
 
+        
         #region Methods
         public static void LogUserIn(string logInName, string password)
         {
