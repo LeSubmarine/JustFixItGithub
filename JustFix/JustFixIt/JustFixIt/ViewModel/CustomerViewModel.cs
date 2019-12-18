@@ -32,15 +32,15 @@ namespace JustFixIt.ViewModel
 
         public void AddToCalender()
         {
-            if (Week.WeekTable.Days[SelectedDay].TimeAvailable)
+            if (Week.WeekTable.Days[SelectedDay].TimeAvailable && Order.Count != 0)
             {
                 Week.WeekTable.Days[SelectedDay].AddTask(new List<WorkTask>(Order));
                 for (int i = 0; i < Order.Count;)
                 {
                     Order.RemoveAt(i);
                 }
-
             }
+            MainViewModel.SaveWeek();
         }
         public ICommand AddCommand { get; set; }
         public ICommand RemoveCommand { get; set; }
@@ -75,5 +75,6 @@ namespace JustFixIt.ViewModel
         {
             Order.Add(WorkTask.WorkTasks[SelectedTask]);
         }
+
     }
 }

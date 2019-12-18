@@ -112,7 +112,7 @@ namespace JustFixIt.ViewModel
                 Password = "";
                 Email = "";
                 Number = "";
-                MainViewModel.Save();
+                MainViewModel.SaveUsers();
             }
         } 
         #endregion

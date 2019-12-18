@@ -18,6 +18,7 @@ namespace JustFixIt.Model
         }
         #endregion
 
+
         #region Constructor
         public Car(int carYear, int carType, string licensePlate)
         {

@@ -10,21 +10,21 @@ using Windows.UI.Popups;
 using JustFixIt.Model;
 using Newtonsoft.Json;
 
-namespace JustFixIt.Model
+namespace JustFixIt.Persistency
 {
-    class PersistencyService
+    class PersistencyUser
     {
         private static string jsonAdminsFileName = "Admins.json";
         private static string jsonCustomersFileName = "Customers.json";
         private static string jsonMechanicsFileName = "Mechanics.json";
 
-        public static async void SaveUsersAsJsonAsync(List<User> Users)
+        public static void SaveUsersAsJson(List<User> Users)
         {
             //[0] = admin, [1] = customer, [2] = mechanic
-            List<User>[] SortedUsers = {new List<User>(), new List<User>(), new List<User>()};
+            List<User>[] SortedUsers = { new List<User>(), new List<User>(), new List<User>() };
             foreach (User user in Users)
             {
-                SortedUsers[(int) user.PersonType].Add(user);
+                SortedUsers[(int)user.PersonType].Add(user);
             }
 
             //Admin saving
@@ -79,23 +79,10 @@ namespace JustFixIt.Model
                 StorageFile localFile = await ApplicationData.Current.LocalFolder.GetFileAsync(fileName);
                 return await FileIO.ReadTextAsync(localFile);
             }
-            catch (FileNotFoundException ex)
+            catch
             {
-                MessageDialogHelper.Show("Loading for the first time? - Try Add and Save some Notes before trying to Save for the first time", "File not Found");
                 return null;
             }
         }
-
-
-        private class MessageDialogHelper
-        {
-            public static async void Show(string content, string title)
-            {
-                MessageDialog messageDialog = new MessageDialog(content, title);
-                await messageDialog.ShowAsync();
-            }
-        }
-
-
     }
 }
