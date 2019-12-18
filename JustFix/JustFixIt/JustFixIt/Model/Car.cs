@@ -14,7 +14,8 @@ namespace JustFixIt.Model
         {
             Peugeot,
             Citroen,
-            Renault
+            Renault,
+            Skoda
         }
         #endregion
 
@@ -51,6 +52,9 @@ namespace JustFixIt.Model
                     break;
                 case CarTypes.Renault:
                     modifier = modifier - 0.3;
+                    break;
+                case CarTypes.Skoda:
+                    modifier = modifier + 2.0;
                     break;
                 default:
                     //modifier = modifier;
