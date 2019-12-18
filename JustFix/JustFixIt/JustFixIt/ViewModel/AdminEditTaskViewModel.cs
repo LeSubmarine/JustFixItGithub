@@ -21,6 +21,7 @@ namespace JustFixIt.ViewModel
         private ObservableCollection<WorkTask> _theOrder;
         private int _selectedOrder;
         private int _selectedWorkTask;
+        private int _selectedWorkTaskFromOrder;
 
         #endregion
 
@@ -42,7 +43,12 @@ namespace JustFixIt.ViewModel
 
         #region Properties
 
-        public int SelectedWorkTaskFromOrder { get; set; }
+        public int SelectedWorkTaskFromOrder
+        {
+            get => _selectedWorkTaskFromOrder;
+            set { _selectedWorkTaskFromOrder = value; OnPropertyChanged();}
+        }
+
         public ICommand RemoveCommand { get; set; }
         public ICommand AddCommand { get; set; }
         public ICommand SaveCommand { get; set; }
@@ -51,7 +57,7 @@ namespace JustFixIt.ViewModel
         public int SelectedWorkTask
         {
             get => _selectedWorkTask;
-            set => _selectedWorkTask = value;
+            set { _selectedWorkTask = value; OnPropertyChanged(); }
         }
 
         public ObservableCollection<WorkTask> TheOrder
@@ -82,6 +88,8 @@ namespace JustFixIt.ViewModel
             set
             {
                 _selectedDay = value;
+                SelectedOrder = (Week.WeekTable.Days[SelectedDay].Orders.Count > 0 ? 0 : -1);
+                SelectedWorkTaskFromOrder = (SelectedOrder == 0 ? Week.WeekTable.Days[SelectedDay].Orders[SelectedOrder].WorkTasks.Count > 0 ? 0 : -1 : -1);
                 WeekDay = new ObservableCollection<Order>(Week.WeekTable.Days[SelectedDay].Orders);
             }
         }
@@ -92,30 +100,60 @@ namespace JustFixIt.ViewModel
             set
             {
                 _selectedOrder = value;
+                SelectedWorkTaskFromOrder = (SelectedOrder == 0 ? Week.WeekTable.Days[SelectedDay].Orders[SelectedOrder].WorkTasks.Count > 0 ? 0 : -1 : -1);
                 if (SelectedOrder >= 0)
                 {
                     TheOrder = new ObservableCollection<WorkTask>(Week.WeekTable.Days[SelectedDay].Orders[SelectedOrder].WorkTasks);
                 }
+                else
+                {
+                    TheOrder = new ObservableCollection<WorkTask>();
+                }
+                OnPropertyChanged();
             }
         }
     
 
-    #endregion
+        #endregion
 
 
         #region Methods
         public void Add()
         {
-            TheOrder.Add(WorkTask.WorkTasks[SelectedWorkTask]);
-            Week.WeekTable.Days[SelectedDay].Orders[SelectedOrder].WorkTasks.Add(WorkTask.WorkTasks[SelectedWorkTask]);
+            if (TheOrder != null)
+            {
+                if (SelectedOrder < Week.WeekTable.Days[SelectedDay].Orders.Count && SelectedOrder >= 0)
+                {
+                    int tempSelectedOrder = SelectedOrder;
+                    TheOrder.Add(WorkTask.WorkTasks[SelectedWorkTask]);
+                    Week.WeekTable.Days[SelectedDay].Orders[SelectedOrder].WorkTasks.Add(WorkTask.WorkTasks[SelectedWorkTask]);
+                    for (int i = 0; i < WeekDay.Count; i++)
+                    {
+                        WeekDay[i] = Week.WeekTable.Days[SelectedDay].Orders[i];
+                    }
+                    SelectedOrder = tempSelectedOrder;
+                }
+            }
         }
 
         public void Remove()
         {
-            if (SelectedWorkTaskFromOrder>= 0 && SelectedWorkTaskFromOrder < TheOrder.Count) 
+            if (TheOrder != null)
             {
-                Week.WeekTable.Days[SelectedDay].Orders[SelectedWorkTaskFromOrder].WorkTasks.RemoveAt(SelectedWorkTaskFromOrder);
-                TheOrder.RemoveAt(SelectedWorkTaskFromOrder);
+                if (SelectedOrder < Week.WeekTable.Days[SelectedDay].Orders.Count)
+                {
+                    if (SelectedWorkTaskFromOrder >= 0 && SelectedWorkTaskFromOrder < TheOrder.Count)
+                    {
+                        int tempSelectedOrder = SelectedOrder;
+                        Week.WeekTable.Days[SelectedDay].Orders[SelectedOrder].WorkTasks.RemoveAt(SelectedWorkTaskFromOrder);
+                        TheOrder.RemoveAt(SelectedWorkTaskFromOrder);
+                        for (int i = 0; i < WeekDay.Count; i++)
+                        {
+                            WeekDay[i] = Week.WeekTable.Days[SelectedDay].Orders[i];
+                        }
+                        SelectedOrder = tempSelectedOrder;
+                    }
+                }
             }
         }
 
@@ -130,8 +168,10 @@ namespace JustFixIt.ViewModel
                         Week.WeekTable.Days[i].Orders.RemoveAt(k);
                         k--;
                     }
+                    SelectedDay = SelectedDay;
                 }
             }
+            MainViewModel.SaveWeek();
         }
         #endregion
 
