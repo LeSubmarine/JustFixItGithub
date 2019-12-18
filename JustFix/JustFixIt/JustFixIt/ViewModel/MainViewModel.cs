@@ -7,7 +7,7 @@ using JustFixIt.Model;
 using JustFixIt.Persistency;
 
 namespace JustFixIt.ViewModel
-{
+{// Henrik
     class MainViewModel
     {
         #region Constructor

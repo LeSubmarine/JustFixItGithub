@@ -9,7 +9,7 @@ using System.Windows.Input;
 using Windows.ApplicationModel.VoiceCommands;
 using JustFixIt.Annotations;
 using JustFixIt.Model;
-
+// Henrik
 namespace JustFixIt.ViewModel
 {
     class CreateAccountViewModel : INotifyPropertyChanged

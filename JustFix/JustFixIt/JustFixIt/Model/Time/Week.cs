@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Appointments;
 
 namespace JustFixIt.Model
-{
+{//Jonas
     class Week
     {
         public Week()

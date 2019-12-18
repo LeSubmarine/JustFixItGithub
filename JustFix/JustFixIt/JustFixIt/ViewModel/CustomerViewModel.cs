@@ -12,7 +12,7 @@ using JustFixIt.Annotations;
 using JustFixIt.Model;
 
 namespace JustFixIt.ViewModel
-{
+{// Sebastian
     class CustomerViewModel : INotifyPropertyChanged
     {
         private ObservableCollection<WorkTask> _order;

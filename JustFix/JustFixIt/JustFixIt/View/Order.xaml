@@ -8,7 +8,8 @@
     xmlns:viewModel="using:JustFixIt.ViewModel"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-<Page.DataContext>
+    <!--Nikolaj-->
+    <Page.DataContext>
         <viewModel:OrderViewModel></viewModel:OrderViewModel>
 </Page.DataContext>
     <Grid>

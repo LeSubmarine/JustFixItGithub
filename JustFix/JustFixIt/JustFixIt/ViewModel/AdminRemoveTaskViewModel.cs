@@ -11,7 +11,7 @@ using JustFixIt.Annotations;
 using JustFixIt.Model;
 
 namespace JustFixIt.ViewModel
-{
+{// Mike
     class AdminRemoveTaskViewModel :  INotifyPropertyChanged
     {
         #region Instancefield

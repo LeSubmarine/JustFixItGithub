@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace JustFixIt.Model
-{
+{//Nikolaj
     class Day
     {
         #region Constants

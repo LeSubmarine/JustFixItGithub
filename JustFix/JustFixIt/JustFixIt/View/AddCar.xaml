@@ -8,6 +8,7 @@
     xmlns:viewModel="using:JustFixIt.ViewModel"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <!--Mike-->
     <Page.DataContext>
         <viewModel:CreateCarViewModel></viewModel:CreateCarViewModel>
     </Page.DataContext>

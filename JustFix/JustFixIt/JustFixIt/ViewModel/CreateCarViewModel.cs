@@ -14,7 +14,7 @@ using JustFixIt.Annotations;
 using JustFixIt.Model;
 
 namespace JustFixIt.ViewModel
-{
+{// Mike
     class CreateCarViewModel : INotifyPropertyChanged
     {
         private int _carYear;

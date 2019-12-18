@@ -12,7 +12,7 @@ using JustFixIt.Model;
 using JustFixIt.View;
 
 namespace JustFixIt.ViewModel
-{
+{// Jonas
     class AdminViewModel : INotifyPropertyChanged
     {
         #region Instance field
