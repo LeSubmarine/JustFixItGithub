@@ -14,7 +14,7 @@ using JustFixIt.View;
 namespace JustFixIt.ViewModel
 {
     class LogInViewModel : INotifyPropertyChanged
-    {
+    {// Nikolaj
         #region Properties
         public string LogInName { get; set; }
         public string Password { get; set; }

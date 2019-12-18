@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using JustFixIt.View;
 
 namespace JustFixIt.Model
-{
+{ //Sebastian
     abstract class User
     {
         #region Constants

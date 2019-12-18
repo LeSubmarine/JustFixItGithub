@@ -7,6 +7,7 @@
     xmlns:viewModel="using:JustFixIt.ViewModel"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     mc:Ignorable="d">
+    <!--Henrik-->
     <Page.DataContext>
         <viewModel:LogInViewModel />
     </Page.DataContext>

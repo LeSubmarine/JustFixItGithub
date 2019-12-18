@@ -10,7 +10,7 @@
 
     <Grid Background="Purple">
         <Viewbox>
-            <Button x:Name="Back" Click="Back_Click"></Button>
+            <Button x:Name="Back" Click="Back_Click" />
         </Viewbox>
     </Grid>
 </Page>

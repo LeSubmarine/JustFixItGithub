@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Calls.Background;
 
 namespace JustFixIt.Model
-{
+{ // Mike
     class Order
     {
         public Order()
