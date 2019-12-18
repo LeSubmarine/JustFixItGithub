@@ -132,6 +132,7 @@
     <Compile Include="Model\WorkTask.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="ViewModel\AdminEditTaskViewModel.cs" />
     <Compile Include="ViewModel\AdminRemoveTaskViewModel.cs" />
     <Compile Include="ViewModel\AdminViewModel.cs" />
     <Compile Include="ViewModel\CreateAccountViewModel.cs" />

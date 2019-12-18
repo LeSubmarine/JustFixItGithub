@@ -5,18 +5,52 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:JustFixIt.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModel="using:JustFixIt.ViewModel"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     mc:Ignorable="d">
 
+    <Page.DataContext>
+        <viewModel:AdminEditTaskViewModel />
+    </Page.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        
-        </Grid>
+        <StackPanel>
+            <ComboBox ItemsSource="{Binding ListOfDays}" SelectedIndex="{Binding SelectedDay, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+            <ListView ItemsSource="{Binding WeekDay, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding SelectedOrder, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+        </StackPanel>
+        <ListView
+            Grid.Column="1"
+            ItemsSource="{Binding TheOrder, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+            SelectedIndex="{Binding SelectedWorkTask}" />
+        <Viewbox Grid.Column="2">
+            <StackPanel>
+                <Button
+                    x:Name="AddCommandButton"
+                    Width="100"
+                    Margin="0,0,0,10"
+                    Command="{Binding AddCommand}"
+                    Content="Add" />
+                <Button
+                    x:Name="RemoveCommandButton"
+                    Width="100"
+                    Margin="0,0,0,10"
+                    Command="{Binding RemoveCommand}"
+                    Content="Remove" />
+                <Button
+                    x:Name="Save"
+                    Width="100"
+                    Command="{Binding SaveCommand}"
+                    Content="Save Order" />
+            </StackPanel>
+        </Viewbox>
+        <ListView
+            Grid.Column="3"
+            ItemsSource="{Binding WorkTasksTypes}"
+            SelectedIndex="{Binding SelectedWorkTask}" />
+    </Grid>
 </Page>
